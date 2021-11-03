@@ -20,8 +20,12 @@ to disable controllers in game then you'll need to use the additional 'fell' opt
 
 Example to use the included conf with Fell Seal -> sudo ./joygo FellSeal.conf fell
 
-In the future I may add mouse controls for the joysticks. Some games may work okay with it.
+Things to come:
+
+1. I may add mouse controls for the joysticks. Some games may work okay with it.
 However, the joysticks are treated as D-Pads by the Linux driver so there's nothing I can do about this.
+
+2. I will eventually add the ability for key combinations. Currently, you can only set single keys. 
 
 NOTE: The key mapping format is from robotgo so if you would like a full reference, you can check it out here:
 
