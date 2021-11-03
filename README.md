@@ -25,7 +25,7 @@ the game will scroll that direction and seem like a joystick is stuck but it's n
 
 Things to come:
 
-1. I may add mouse controls for the joysticks. Some games may work okay with it.
+1. I might add mouse controls for the joysticks. Some games may work okay with it.
 However, the joysticks are treated as D-Pads by the Linux driver so there's nothing I can do about this.
 
 2. I will eventually add the ability for key combinations. Currently, you can only set single keys. 
