@@ -20,6 +20,9 @@ to disable controllers in game then you'll need to use the additional 'fell' opt
 
 Example to use the included conf with Fell Seal -> sudo ./joygo FellSeal.conf fell
 
+Reminder: The mouse is still active in game so make sure your cursor isn't off to the side or
+the game will scroll that direction and seem like a joystick is stuck but it's not ;)
+
 Things to come:
 
 1. I may add mouse controls for the joysticks. Some games may work okay with it.
