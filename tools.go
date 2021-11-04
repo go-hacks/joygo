@@ -1,17 +1,17 @@
 package main
 
 import (
-  "fmt"
-  "os"
-  "github.com/gvalkov/golang-evdev"
+	"fmt"
+	"os"
+	"github.com/gvalkov/golang-evdev"
 )
 
 func isEventMatch(event *evdev.InputEvent, matchEvent evMatch) bool {
 	if event.Code == matchEvent.Code && event.Type == matchEvent.Type && event.Value == matchEvent.Value {
 		return true
 	} else {
-	  return false
-  }
+		return false
+	}
 }
 
 func parseFatal(err error, msg string) {
