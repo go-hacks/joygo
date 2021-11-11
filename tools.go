@@ -7,7 +7,7 @@ import (
 )
 
 func isEventMatch(event *evdev.InputEvent, matchEvent evMatch) bool {
-	if event.Code == matchEvent.Code && event.Type == matchEvent.Type && event.Value == matchEvent.Value {
+	if event.Code == matchEvent.Code && event.Type == matchEvent.Type {
 		return true
 	} else {
 		return false

@@ -15,226 +15,82 @@ type evMatch struct {
 
 //Initialize match events
 // Right Joycon events
-var btnXPress = evMatch{
-	Code: 305, Type: 1, Value: 1,
+var btnXEvent = evMatch{
+	Code: 305, Type: 1,
 }
-var btnXRelease = evMatch{
-	Code: 305, Type: 1, Value: 0,
+var btnYEvent = evMatch{
+	Code: 307, Type: 1,
 }
-var btnXHold = evMatch{
-	Code: 305, Type: 1, Value: 2,
+var btnAEvent = evMatch{
+	Code: 304, Type: 1,
 }
-var btnYPress = evMatch{
-	Code: 307, Type: 1, Value: 1,
+var btnBEvent = evMatch{
+	Code: 306, Type: 1,
 }
-var btnYRelease = evMatch{
-	Code: 307, Type: 1, Value: 0,
+var btnPlusEvent = evMatch{
+	Code: 313, Type: 1,
 }
-var btnYHold = evMatch{
-	Code: 307, Type: 1, Value: 2,
+var btnHomeEvent = evMatch{
+	Code: 316, Type: 1,
 }
-var btnAPress = evMatch{
-	Code: 304, Type: 1, Value: 1,
+var btnREvent = evMatch{
+	Code: 318, Type: 1,
 }
-var btnARelease = evMatch{
-	Code: 304, Type: 1, Value: 0,
+var btnRZEvent = evMatch{
+	Code: 319, Type: 1,
 }
-var btnAHold = evMatch{
-	Code: 304, Type: 1, Value: 2,
+var btnSLEvent = evMatch{
+	Code: 308, Type: 1,
 }
-var btnBPress = evMatch{
-	Code: 306, Type: 1, Value: 1,
+var btnSREvent = evMatch{
+	Code: 309, Type: 1,
 }
-var btnBRelease = evMatch{
-	Code: 306, Type: 1, Value: 0,
+var rightStickHEvent = evMatch{
+	Code: 17, Type: 3,
 }
-var btnBHold = evMatch{
-	Code: 306, Type: 1, Value: 2,
+var rightStickVEvent = evMatch{
+	Code: 16, Type: 3,
 }
-var btnPPress = evMatch{
-	Code: 313, Type: 1, Value: 1,
-}
-var btnPRelease = evMatch{
-	Code: 313, Type: 1, Value: 0,
-}
-var btnPHold = evMatch{
-	Code: 313, Type: 1, Value: 2,
-}
-var btnHPress = evMatch{
-	Code: 316, Type: 1, Value: 1,
-}
-var btnHRelease = evMatch{
-	Code: 316, Type: 1, Value: 0,
-}
-var btnHHold = evMatch{
-	Code: 316, Type: 1, Value: 2,
-}
-var btnRPress = evMatch{
-	Code: 318, Type: 1, Value: 1,
-}
-var btnRRelease = evMatch{
-	Code: 318, Type: 1, Value: 0,
-}
-var btnRHold = evMatch{
-	Code: 318, Type: 1, Value: 2,
-}
-var btnRZPress = evMatch{
-	Code: 319, Type: 1, Value: 1,
-}
-var btnRZRelease = evMatch{
-	Code: 319, Type: 1, Value: 0,
-}
-var btnRZHold = evMatch{
-	Code: 319, Type: 1, Value: 2,
-}
-var btnSLPress = evMatch{
-	Code: 308, Type: 1, Value: 1,
-}
-var btnSLRelease = evMatch{
-	Code: 308, Type: 1, Value: 0,
-}
-var btnSLHold = evMatch{
-	Code: 308, Type: 1, Value: 2,
-}
-var btnSRPress = evMatch{
-	Code: 309, Type: 1, Value: 1,
-}
-var btnSRRelease = evMatch{
-	Code: 309, Type: 1, Value: 0,
-}
-var btnSRHold = evMatch{
-	Code: 309, Type: 1, Value: 2,
-}
-var rightStickHLeft = evMatch{
-	Code: 17, Type: 3, Value: -1,
-}
-var rightStickHRight = evMatch{
-	Code: 17, Type: 3, Value: 1,
-}
-var rightStickHRelease = evMatch{
-	Code: 17, Type: 3, Value: 0,
-}
-var rightStickVDown = evMatch{
-	Code: 16, Type: 3, Value: -1,
-}
-var rightStickVUp = evMatch{
-	Code: 16, Type: 3, Value: 1,
-}
-var rightStickVRelease = evMatch{
-	Code: 16, Type: 3, Value: 0,
-}
-var btnR3Press = evMatch{
-	Code: 315, Type: 1, Value: 1,
-}
-var btnR3Release = evMatch{
-	Code: 315, Type: 1, Value: 0,
-}
-var btnR3Hold = evMatch{
-	Code: 315, Type: 1, Value: 2,
+var btnR3Event = evMatch{
+	Code: 315, Type: 1,
 }
 // Left Joycon events
-var btnDownPress = evMatch{
-	Code: 305, Type: 1, Value: 1,
+var btnDownEvent = evMatch{
+	Code: 305, Type: 1,
 }
-var btnDownRelease = evMatch{
-	Code: 305, Type: 1, Value: 0,
+var btnRightEvent = evMatch{
+	Code: 307, Type: 1,
 }
-var btnDownHold = evMatch{
-	Code: 305, Type: 1, Value: 2,
+var btnLeftEvent = evMatch{
+	Code: 304, Type: 1,
 }
-var btnRightPress = evMatch{
-	Code: 307, Type: 1, Value: 1,
+var btnUpEvent = evMatch{
+	Code: 306, Type: 1,
 }
-var btnRightRelease = evMatch{
-	Code: 307, Type: 1, Value: 0,
+var btnMinusEvent = evMatch{
+	Code: 312, Type: 1,
 }
-var btnRightHold = evMatch{
-	Code: 307, Type: 1, Value: 2,
+var btnSSEvent = evMatch{
+	Code: 317, Type: 1,
 }
-var btnLeftPress = evMatch{
-	Code: 304, Type: 1, Value: 1,
+var btnLEvent = evMatch{
+	Code: 318, Type: 1,
 }
-var btnLeftRelease = evMatch{
-	Code: 304, Type: 1, Value: 0,
+var btnLZEvent = evMatch{
+	Code: 319, Type: 1,
 }
-var btnLeftHold = evMatch{
-	Code: 304, Type: 1, Value: 2,
+var leftStickHEvent = evMatch{
+	Code: 17, Type: 3,
 }
-var btnUpPress = evMatch{
-	Code: 306, Type: 1, Value: 1,
+var leftStickVEvent = evMatch{
+	Code: 16, Type: 3,
 }
-var btnUpRelease = evMatch{
-	Code: 306, Type: 1, Value: 0,
-}
-var btnUpHold = evMatch{
-	Code: 306, Type: 1, Value: 2,
-}
-var btnMPress = evMatch{
-	Code: 312, Type: 1, Value: 1,
-}
-var btnMRelease = evMatch{
-	Code: 312, Type: 1, Value: 0,
-}
-var btnMHold = evMatch{
-	Code: 312, Type: 1, Value: 2,
-}
-var btnSSPress = evMatch{
-	Code: 317, Type: 1, Value: 1,
-}
-var btnSSRelease = evMatch{
-	Code: 317, Type: 1, Value: 0,
-}
-var btnSSHold = evMatch{
-	Code: 317, Type: 1, Value: 2,
-}
-var btnLPress = evMatch{
-	Code: 318, Type: 1, Value: 1,
-}
-var btnLRelease = evMatch{
-	Code: 318, Type: 1, Value: 0,
-}
-var btnLHold = evMatch{
-	Code: 318, Type: 1, Value: 2,
-}
-var btnLZPress = evMatch{
-	Code: 319, Type: 1, Value: 1,
-}
-var btnLZRelease = evMatch{
-	Code: 319, Type: 1, Value: 0,
-}
-var btnLZHold = evMatch{
-	Code: 319, Type: 1, Value: 2,
-}
-var leftStickHRight = evMatch{
-	Code: 17, Type: 3, Value: -1,
-}
-var leftStickHLeft = evMatch{
-	Code: 17, Type: 3, Value: 1,
-}
-var leftStickHRelease = evMatch{
-	Code: 17, Type: 3, Value: 0,
-}
-var leftStickVUp = evMatch{
-	Code: 16, Type: 3, Value: -1,
-}
-var leftStickVDown = evMatch{
-	Code: 16, Type: 3, Value: 1,
-}
-var leftStickVRelease = evMatch{
-	Code: 16, Type: 3, Value: 0,
-}
-var btnL3Press = evMatch{
-	Code: 314, Type: 1, Value: 1,
-}
-var btnL3Release = evMatch{
-	Code: 314, Type: 1, Value: 0,
-}
-var btnL3Hold = evMatch{
-	Code: 314, Type: 1, Value: 2,
+var btnL3Event = evMatch{
+	Code: 314, Type: 1,
 }
 // Other events
-var endFrame = evMatch{
-	Code: 0, Type: 0, Value: 0,
+var endFrameEvent = evMatch{
+	Code: 0, Type: 0,
 }
 
 // Global button vars

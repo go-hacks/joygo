@@ -129,7 +129,7 @@ func main () {
 		jsDevNameL = string(jsDevBytesL[0:len(jsDevBytesL)-1])
 		cmd3 := "chmod 0600 /dev/input/"
 		_, cmd3RErr := exec.Command("bash", "-c", cmd3 + jsDevNameR).Output()
-		parseFatal(cmd3RErr, "Cmd3R Fail!")
+		parseFatal(cmd3RErr, "\nCmd3R Fail! Need root.")
 		_, cmd3LErr := exec.Command("bash", "-c", cmd3 + jsDevNameL).Output()
 		parseFatal(cmd3LErr, "Cmd3L Fail!")
 		cmd4 := "chmod 0600 "
