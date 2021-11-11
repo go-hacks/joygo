@@ -1,11 +1,17 @@
 # joygo
-Nintendo Switch Joycon keyboard mapper for Linux
+## Nintendo Switch Joycon keyboard mapper for Linux
 
-First, build with -> chmod +x build && ./build
+First, build with
+``` sh
+chmod +x build && ./build
+```
 
 Then pair your Joycons to your computer via Bluetooth.
 
-Lastly, run with ./joygo game.conf
+Lastly, run with
+``` sh
+./joygo game.conf
+```
 
 You can make a config for each game you like and choose to use the R, L, or both Joycons together.
 
@@ -18,7 +24,10 @@ There is also a required hack to make Fell Seal work. There may be other games w
 Basically if a game has its own controller handling that conflicts with this and provides no option
 to disable controllers in game then you'll need to use the additional 'fell' option and run it as root.
 
-Example to use the included conf with Fell Seal -> sudo ./joygo FellSeal.conf fell
+Example to use the included conf with Fell Seal
+``` sh
+sudo ./joygo FellSeal.conf fell
+```
 
 Reminder: The mouse is still active in game so make sure your cursor isn't off to the side or
 the game will scroll that direction and seem like a joystick is stuck but it's not ;)
