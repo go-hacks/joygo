@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	//"time"
+	"time"
 	"github.com/gvalkov/golang-evdev"
 )
 
@@ -126,6 +126,8 @@ func frameReader (path string, channel chan []evdev.InputEvent) {
 	return
 }
 
+// Wait for Ctrl+C or SIGTERM then cleanup
+// and tell main program to quit
 func exitHook (sigChan chan os.Signal, exitChan chan bool) {
 	<-sigChan
 	if fellMod == true {
