@@ -6,6 +6,7 @@ import (
 	"github.com/gvalkov/golang-evdev"
 )
 
+// Input event matcher
 func isEventMatch(event *evdev.InputEvent, matchEvent evMatch) bool {
 	if event.Code == matchEvent.Code && event.Type == matchEvent.Type {
 		return true
@@ -14,6 +15,7 @@ func isEventMatch(event *evdev.InputEvent, matchEvent evMatch) bool {
 	}
 }
 
+// Handle fatal errors
 func parseFatal(err error, msg string) {
 	if err != nil {
 		if msg != "" {
@@ -24,4 +26,9 @@ func parseFatal(err error, msg string) {
 	} else {
 		return
 	}
+}
+
+// Snip endline char and convert to string
+func trimToStr (src []byte) string {
+	return string(src[0:len(src)-1])
 }

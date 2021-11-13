@@ -1,20 +1,21 @@
-// Version 0.77
+// Version 0.80
 
 package main
 
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"os/signal"
-	"strings"
 	"syscall"
-	"time"
+	//"time"
 	"github.com/gvalkov/golang-evdev"
 )
 
+// Joycon event dev paths
+var devPathR, devPathL string
 // Joycon in use bools
-var joyconR, joyconL bool = false, false
+var rightJoyconIsRequested bool = false
+var leftJoyconIsRequested bool = false
 
 // Mod for Fell Seal and possibly other
 // games that have the same problem.
@@ -32,8 +33,7 @@ func main () {
 	devices, err := evdev.ListInputDevices()
 	parseFatal(err, "Fail to get input device list")
 	// Get dev paths for right joycon if enabled
-	var devPathR string
-	if joyconR {
+	if rightJoyconIsRequested {
 		for _, dev := range devices {
 			if dev.Name == "Joy-Con (R)" {
 				fmt.Println("Joy-Con(R) Found! @", dev.Fn)
@@ -43,8 +43,7 @@ func main () {
 		}
 	}
 	// Get dev paths for left joycon if enabled
-	var devPathL string
-	if joyconL {
+	if leftJoyconIsRequested {
 		for _, dev := range devices {
 			if dev.Name == "Joy-Con (L)" {
 				fmt.Println("Joy-Con(L) Found! @", dev.Fn)
@@ -58,7 +57,7 @@ func main () {
 	var failCheck bool = false
 	var outStrR string = "Joy-Con(R) Not "
 	if devPathR == "" {
-		if joyconR {
+		if rightJoyconIsRequested {
 			outStrR = outStrR + "Found!"
 			failCheck = true
 		} else {
@@ -68,7 +67,7 @@ func main () {
 	}
 	var outStrL string = "Joy-Con(L) Not "
 	if devPathL == "" {
-		if joyconL {
+		if leftJoyconIsRequested {
 			outStrL = outStrL + "Found!"
 			failCheck = true
 		} else {
@@ -84,102 +83,36 @@ func main () {
 	// Make event frame channels and initiate handlers
 	rightFrameChannel := make(chan []evdev.InputEvent, 5)
 	leftFrameChannel := make(chan []evdev.InputEvent, 5)
-	if joyconR {
+	if rightJoyconIsRequested {
 		go rightJoyconHandler(rightFrameChannel)
 	}
-	if joyconL {
+	if leftJoyconIsRequested {
 		go leftJoyconHandler(leftFrameChannel)
 	}
 
-	// Fell Seal has controller code that uses the controller
-	// w/o user permission and w/o any way to disable it
-	// which causes conflicts with the split controller.
-	// This hack makes the user process unable to access the
-	// event node while we can still use it with joygo via root.
-	var jsDevNameR string
-	var jsDevNameL string
+	// Fell Seal hack if requested
 	if len(os.Args) == 3 && os.Args[2] == "fell" {
-		fmt.Printf("Modding event nodes for Fell Seal...")
-		fellMod = true
-		evNumR := strings.Split(devPathR, "/")
-		evNumL := strings.Split(devPathL, "/")
-		cmd1R := "ls -R /sys/devices | grep bluetooth | grep " + evNumR[len(evNumR)-1] + " | head -1"
-		cmd1L := "ls -R /sys/devices | grep bluetooth | grep " + evNumL[len(evNumL)-1] + " | head -1"
-		pathR, cmd1RErr := exec.Command("bash", "-c", cmd1R).Output()
-		parseFatal(cmd1RErr, "Cmd1R Fail!")
-		pathL, cmd1LErr := exec.Command("bash", "-c", cmd1L).Output()
-		parseFatal(cmd1LErr, "Cmd1L Fail!")
-		splitPathR := strings.Split(string(pathR), "/")
-		splitPathL := strings.Split(string(pathL), "/")
-		var newPathR string
-		for i := 1; i < len(splitPathR)-1; i++ {
-			newPathR = newPathR + "/" + splitPathR[i]
-		}
-		var newPathL string
-		for i := 1; i < len(splitPathL)-1; i++ {
-			newPathL = newPathL + "/" + splitPathL[i]
-		}
-		cmd2R := "ls " + newPathR + " | grep js"
-		cmd2L := "ls " + newPathL + " | grep js"
-		jsDevBytesR, cmd2RErr := exec.Command("bash", "-c", cmd2R).Output()
-		parseFatal(cmd2RErr, "Cmd2R Fail!")
-		jsDevBytesL, cmd2LErr := exec.Command("bash", "-c", cmd2L).Output()
-		parseFatal(cmd2LErr, "Cmd2L Fail!")
-		jsDevNameR = string(jsDevBytesR[0:len(jsDevBytesR)-1])
-		jsDevNameL = string(jsDevBytesL[0:len(jsDevBytesL)-1])
-		cmd3 := "chmod 0600 /dev/input/"
-		_, cmd3RErr := exec.Command("bash", "-c", cmd3 + jsDevNameR).Output()
-		parseFatal(cmd3RErr, "\nCmd3R Fail! Need root.")
-		_, cmd3LErr := exec.Command("bash", "-c", cmd3 + jsDevNameL).Output()
-		parseFatal(cmd3LErr, "Cmd3L Fail!")
-		cmd4 := "chmod 0600 "
-		_, cmd4RErr := exec.Command("bash", "-c", cmd4 + devPathR).Output()
-		parseFatal(cmd4RErr, "Cmd4R Fail!")
-		_, cmd4LErr := exec.Command("bash", "-c", cmd4 + devPathL).Output()
-		parseFatal(cmd4LErr, "Cmd4L Fail!")
-		fmt.Printf("READY!\n")
+		fellSealHack()
 	}
 
 	// Start Ctrl+C & sigterm hook to handle closure
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		<-sigChan
-		if fellMod == true {
-			fmt.Printf("Reverting event node permissions...")
-			cmd5 := "chmod 0660 /dev/input/"
-			_, cmd5RErr := exec.Command("bash", "-c", cmd5 + jsDevNameR).Output()
-			parseFatal(cmd5RErr, "Cmd5R Fail!")
-			_, cmd5LErr := exec.Command("bash", "-c", cmd5 + jsDevNameL).Output()
-			parseFatal(cmd5LErr, "Cmd5L Fail!")
-			cmd6 := "chmod 0660 "
-			_, cmd6RErr := exec.Command("bash", "-c", cmd6 + devPathR).Output()
-			parseFatal(cmd6RErr, "Cmd6R Fail!")
-			_, cmd6LErr := exec.Command("bash", "-c", cmd6 + devPathL).Output()
-			parseFatal(cmd6LErr, "Cmd6L Fail!")
-			fmt.Printf("Done.\n")
-		}
-		os.Exit(0)
-	}()
+	exitChan := make(chan bool)
+	go exitHook(sigChan, exitChan)
 
 	// Start up the frameReaders
-	if joyconR {
+	if rightJoyconIsRequested {
 		go frameReader(devPathR, rightFrameChannel)
 	}
-	if joyconL {
+	if leftJoyconIsRequested {
 		go frameReader(devPathL, leftFrameChannel)
 	}
 
-	// Main program just waits for interrupt/sigterm.
-	// I put a ticker here so it's not sitting in an
-	// unlimited endless loop going brrrrrrrrrrrr XD
+	// Wait for exit hook to send exit signal
 	fmt.Println("\nCtrl+C to exit...")
-	ticker := time.NewTicker(10 * time.Second).C
-	for {
-		select {
-			case <-ticker:
-		}
-	}
+	<-exitChan
+
 	return
 }
 
@@ -190,5 +123,14 @@ func frameReader (path string, channel chan []evdev.InputEvent) {
 		eventFrame, _ := device.Read()
 		channel <- eventFrame
 	}
+	return
+}
+
+func exitHook (sigChan chan os.Signal, exitChan chan bool) {
+	<-sigChan
+	if fellMod == true {
+		fellSealCleanUp()
+	}
+	exitChan <- true
 	return
 }

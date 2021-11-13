@@ -137,14 +137,14 @@ func loadKeyMap () {
 		switch btnVals[0] {
 			case "joycons":
 				if btnVals[1] == "rl" || btnVals[1] == "lr" {
-					joyconR = true
-					joyconL = true
+					rightJoyconIsRequested = true
+					leftJoyconIsRequested = true
 				} else if btnVals[1] == "r" {
-					joyconR = true
-					joyconL = false
+					rightJoyconIsRequested = true
+					leftJoyconIsRequested = false
 				} else if btnVals[1] == "l" {
-					joyconR = false
-					joyconL = true
+					rightJoyconIsRequested = false
+					leftJoyconIsRequested = true
 				} else if btnVals[1] == "" {
 					fmt.Println("You must specify at least one joycon!")
 					os.Exit(0)
