@@ -1,6 +1,5 @@
 // This contains the required hack for Fell Seal and
 // will contain any future hacks for other games.
-
 package main
 
 import (

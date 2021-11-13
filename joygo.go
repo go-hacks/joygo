@@ -1,5 +1,4 @@
 // Version 0.80
-
 package main
 
 import (
@@ -53,12 +52,12 @@ func main () {
 	}
 
 	// Bail if Joycons aren't found
-	var failCheck bool = false
+	var joyconCheckFailed bool = false
 	var outStrR string = "Joy-Con(R) Not "
 	if devPathR == "" {
 		if rightJoyconIsRequested {
 			outStrR = outStrR + "Found!"
-			failCheck = true
+			joyconCheckFailed = true
 		} else {
 			outStrR = outStrR + "Needed."
 		}
@@ -68,13 +67,13 @@ func main () {
 	if devPathL == "" {
 		if leftJoyconIsRequested {
 			outStrL = outStrL + "Found!"
-			failCheck = true
+			joyconCheckFailed = true
 		} else {
 			outStrL = outStrL + "Needed."
 		}
 		fmt.Println(outStrL)
 	}
-	if failCheck == true {
+	if joyconCheckFailed {
 		fmt.Println("ABORTING!")
 		os.Exit(1)
 	}

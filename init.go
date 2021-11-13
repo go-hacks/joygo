@@ -10,7 +10,6 @@ import (
 // Event matching struct
 type evMatch struct {
 	Code, Type uint16
-	Value      int32
 }
 
 //Initialize match events

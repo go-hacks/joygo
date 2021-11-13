@@ -1,3 +1,5 @@
+// Function for interpretting the input
+// events of the left Joycon controller
 package main
 
 import (
