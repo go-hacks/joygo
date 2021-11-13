@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 	"github.com/gvalkov/golang-evdev"
 )
 
